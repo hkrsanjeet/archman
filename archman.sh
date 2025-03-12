@@ -1,12 +1,48 @@
 #!/bin/bash
 
+# Function to auto-partition the disk
+auto_partition_disk() {
+    echo "Auto partitioning the disk $disk..."
+    # Example: One root partition and one swap partition
+    parted $disk mklabel gpt
+    parted $disk mkpart primary ext4 1MiB 100%
+    parted $disk mkpart primary linux-swap 100% 100%
+    
+    # Format root partition
+    root_part="${disk}1"
+    mkfs.ext4 $root_part
+    # Format swap partition
+    swap_part="${disk}2"
+    mkswap $swap_part
+    swapon $swap_part
+    
+    echo "Auto partitioning completed."
+}
+
 # Function to partition the disk
 partition_disk() {
     echo "Please select the disk to partition (e.g., /dev/sda):"
     read -p "Enter disk: " disk
     echo "Partitioning disk $disk..."
-    # Example using cfdisk; modify for other partitioning tools if needed
-    cfdisk $disk
+    
+    # Ask user to choose between auto or manual partitioning
+    echo "Select partitioning option:"
+    echo "1. Auto partition"
+    echo "2. Manual partition with cfdisk"
+    read -p "Enter choice (1 or 2): " partition_choice
+    
+    case $partition_choice in
+        1)
+            auto_partition_disk
+            ;;
+        2)
+            cfdisk $disk
+            ;;
+        *)
+            echo "Invalid choice. Exiting partitioning step."
+            exit 1
+            ;;
+    esac
 }
 
 # Function to format the partitions
