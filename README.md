@@ -8,3 +8,9 @@
 - Package Installation: Installs important system packages, multimedia tools, development utilities, and even an AUR helper (yay);
 - Post-Installation Configuration: Enables system services (such as NetworkManager) and sets up the default session for your desktop environment;
 
+### Installation
+Boot Arch linux ISO (VANILA)
+git clone https://github.com/hkrsanjeet/archman
+chmod +x install_arch.sh
+./install_arch.sh
+
