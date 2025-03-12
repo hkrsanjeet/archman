@@ -8,5 +8,3 @@
 - Package Installation: Installs important system packages, multimedia tools, development utilities, and even an AUR helper (yay);
 - Post-Installation Configuration: Enables system services (such as NetworkManager) and sets up the default session for your desktop environment;
 
-
-###End
